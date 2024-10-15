@@ -18,5 +18,5 @@ input {
 }
 
 .btn.btn-primary {
-    @apply border rounded border-gray-900 text-gray-900 bg-transparent;
+    @apply border-2 rounded border-gray-900 text-gray-900 bg-transparent;
 }
