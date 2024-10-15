@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.container {
+    max-width: 1024;
+    width: calc(100% - 1rem);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+input {
+    @apply border text-xl p-2 rounded
+}
+
+.btn {
+    @apply inline-flex h-10 p-4 rounded items-center justify-center text-center gap-2.5
+}
+
+.btn.btn-primary {
+    @apply border rounded border-gray-900 text-gray-900 bg-transparent;
+}
