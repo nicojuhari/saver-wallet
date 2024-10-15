@@ -31,6 +31,30 @@ export default function useDatabases() {
         }
     };
 
+    const getSharedCards = async (userId: string): Promise<Models.DocumentList<Models.Document>> => {
+        try {
+            const response = await databases.listDocuments(
+                config.databaseId,
+                config.collectionId,
+                [
+                    Query.search('shared_with', userId),
+                    Query.limit(20), // Adjust the limit as needed
+                ]
+            );
+
+            return {
+                ...response,
+                documents: response.documents.map(doc => ({
+                    ...doc,
+                    viewUrl: getFileViewUrl(doc.card_id)
+                }))
+            };
+        } catch (error) {
+            console.error('Error fetching shared cards:', error);
+            throw error;
+        }
+    };
+
     const getFileViewUrl = (fileId: string): string => {
         return `${config.endpoint}/storage/buckets/${config.bucketId}/files/${fileId}/view?project=${config.projectId}`
     }
@@ -78,7 +102,8 @@ export default function useDatabases() {
 
     return {
         addCard,
-        getCardsByUserId
+        getCardsByUserId,
+        getSharedCards
     };
 
 

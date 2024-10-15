@@ -1,25 +1,32 @@
 <script setup lang="ts">
-    import type { Models } from 'appwrite'
     const { currentUser } = useAuth()
-    const { getCardsByUserId } = useDatabase()
+    const { getCardsByUserId, getSharedCards } = useDatabase()
 
     const allCards = ref()
     const cardsCount = ref(0)
+
+    const sharedCards = ref()
 
     if(currentUser.value) {
         let res = await getCardsByUserId(currentUser.value?.$id)
 
         allCards.value = res.documents
         cardsCount.value = res.total
+
+        let res2 = await getSharedCards(currentUser.value?.$id)
+        sharedCards.value = res2.documents
     }
 
     watch(currentUser, async () => {
         if(currentUser.value) {
-        let res = await getCardsByUserId(currentUser.value?.$id)
+            let res = await getCardsByUserId(currentUser.value?.$id)
 
-        allCards.value = res.documents
-        cardsCount.value = res.total
-    }
+            allCards.value = res.documents
+            cardsCount.value = res.total
+
+            let res2 = await getSharedCards(currentUser.value?.$id)
+            sharedCards.value = res2.documents
+        }
     })
 
 
@@ -38,6 +45,19 @@
         </div>
         <div v-else>
             You don't have any cards yet
+        </div>
+
+        <div>Shared with you</div>
+        <div v-if="sharedCards?.length">
+            <div v-for="card in sharedCards" :key="card.$id">
+                {{ card.title }}
+                <div>
+                    <img :src="card.viewUrl" class="credit-card"/>
+                </div>
+            </div>
+        </div>
+        <div v-else>
+            You don't have any shared cards
         </div>
     </div>
 </template>
