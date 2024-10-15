@@ -6,26 +6,16 @@ export default function useBucket() {
     const bucketId = '670d2810001e92b9356c'
     const storage = new Storage(client)
 
-    const uploadFile = async (file: File, newFileName?: string): Promise<Models.File> => {
+    const uploadFile = async (file: File): Promise<Models.File> => {
         if (!file) {
             throw new Error('No file provided for upload')
         }
 
         try {
-            let fileToUpload = file
-            if (newFileName) {
-                const originalExtension = file.name.split('.').pop() || ''
-                const newNameWithExtension = newFileName.includes('.')
-                    ? newFileName
-                    : `${newFileName}.${originalExtension}`
-                
-                fileToUpload = new File([file], newNameWithExtension, { type: file.type })
-            }
-
             return await storage.createFile(
                 bucketId,
                 ID.unique(),
-                fileToUpload
+                file
             )
         } catch (error) {
             console.error('Error uploading file:', error)
@@ -39,7 +29,7 @@ export default function useBucket() {
                 bucketId,
                 [
                     Query.equal('$permissions.read', `user:${userId}`),
-                    Query.limit(10) // Adjust this limit as needed
+                    Query.limit(20) // Adjust this limit as needed
                 ]
             )
         } catch (error) {

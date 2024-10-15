@@ -1,6 +1,6 @@
 <template>
     <footer class="border-t">
-        <div class="container">
+        <div class="container h-14 text-center flex items-center justify-center">
             Footer
         </div>
     </footer>
