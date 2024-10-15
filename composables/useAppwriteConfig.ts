@@ -5,5 +5,6 @@ export default function useAppwriteConfig() {
     databaseId: '670d2a39001a601412d8',
     bucketId: '670e6c4b00360d34a518',
     collectionId: '670d2a7b000d41aa4892',
+    baseUrl: import.meta.dev ? 'http://localhost:3000' : 'https://saver-wallet.netlify.app'
   }
 }

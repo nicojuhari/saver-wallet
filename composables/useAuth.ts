@@ -8,14 +8,21 @@ export default function useAuth() {
 
     // const currentUser = useState<Models.User<Models.Preferences> | null>('currentUser', () => null)
     // const currentSession = useState<Models.Session | null>('currentSession', () => null)
+    const config = useAppwriteConfig()
     const { client } = useAppwrite()
     const account = new Account(client)
     const router = useRouter()
+    
 
     const createMagicURL = async (email: string) => {
+        try {
+            const token = await account?.createMagicURLToken(ID.unique(), email, `${config.baseUrl}/auth`);
+            return token
 
-        const token = await account?.createMagicURLToken(ID.unique(), email, 'http://localhost:3000/auth');
-        return token
+        } catch(err) {
+            console.log(err)
+            throw err
+        }
 
     }
 
