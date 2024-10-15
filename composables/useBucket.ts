@@ -2,8 +2,8 @@ import { ID, Storage, Query } from 'appwrite'
 import type { Models } from 'appwrite'
 
 export default function useBucket() {
-    const { client, APPWRITE_ENDPOINT, APPWRITE_PROJECT_ID } = useAppwrite()
-    const bucketId = '670d2810001e92b9356c'
+    const config = useAppwriteConfig()
+    const { client } = useAppwrite()
     const storage = new Storage(client)
 
     const uploadFile = async (file: File): Promise<Models.File> => {
@@ -13,7 +13,7 @@ export default function useBucket() {
 
         try {
             return await storage.createFile(
-                bucketId,
+                config.bucketId,
                 ID.unique(),
                 file
             )
@@ -26,7 +26,7 @@ export default function useBucket() {
     const getFilesByUser = async (userId: string): Promise<Models.FileList> => {
         try {
             return await storage.listFiles(
-                bucketId,
+                config.bucketId,
                 [
                     Query.equal('$permissions.read', `user:${userId}`),
                     Query.limit(20) // Adjust this limit as needed
@@ -39,7 +39,7 @@ export default function useBucket() {
     }
 
     const getFileViewUrl = (fileId: string): string => {
-        return `${APPWRITE_ENDPOINT}/storage/buckets/${bucketId}/files/${fileId}/view?project=${APPWRITE_PROJECT_ID}&mode=user`
+        return `${config.endpoint}/storage/buckets/${config.bucketId}/files/${fileId}/view?project=${config.projectId}&mode=user`
     }
 
     const getFilesWithViewUrls = async (userId: string): Promise<(Models.File & { viewUrl: string })[]> => {
@@ -55,30 +55,10 @@ export default function useBucket() {
         }
     }
 
-    const updateFileName = async (fileId: string, newFileName: string): Promise<Models.File> => {
-        try {
-            const file = await storage.getFile(bucketId, fileId)
-            const currentExtension = file.name.split('.').pop() || ''
-            const newNameWithExtension = newFileName.includes('.')
-                ? newFileName
-                : `${newFileName}.${currentExtension}`
-
-            return await storage.updateFile(
-                bucketId,
-                fileId,
-                newNameWithExtension
-            )
-        } catch (error) {
-            console.error('Error updating file name:', error)
-            throw error
-        }
-    }
-
     return {
         uploadFile,
         getFilesByUser,
         getFileViewUrl,
         getFilesWithViewUrls,
-        updateFileName
     }
 }

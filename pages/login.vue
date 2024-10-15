@@ -5,7 +5,6 @@
 
     const formData = reactive({
         email: '',
-        password: ''
     })
 
     const formErrors = reactive({
@@ -15,6 +14,7 @@
 
     const handleForm = async () => {
         let response = await createMagicURL(formData.email)
+        console.log(response)
     }
 </script>
 <template>
@@ -42,14 +42,6 @@
                 Login
             </button>
             
-            <div class="flex flex-col" v-if="!signUp">
-                <div class="text-md text-center divider relative flex items-center justify-center">
-                    <span class="z-10 p-4 bg-white rounded-full relative">or</span>
-                </div>
-                <button class="btn">
-                    Continue with Google
-                </button>
-            </div>
             <!-- <div class="text-center w-full mt-8">
                 <a @click.prevent="toggleForm" class="cursor-pointer">
                     <span v-if="signUp">Already have an account? <b class="text-blue-600">Log in</b></span>

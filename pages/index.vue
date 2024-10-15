@@ -11,6 +11,7 @@
 
             <div>
                 <nuxt-link to="/cards/new" class="btn btn-primary">Add a Card</nuxt-link>
+                <nuxt-link to="/cards" class="btn btn-primary">View your cards</nuxt-link>
             </div>
         </div>
         <div v-else>No user</div>

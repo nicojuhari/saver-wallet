@@ -1,15 +1,27 @@
 <script setup lang="ts">
     import type { Models } from 'appwrite'
     const { currentUser } = useAuth()
-    const { getFilesWithViewUrls } = useBucket()
+    const { getCardsByUserId } = useDatabase()
 
-    const allCards = ref<(Models.File & {
-        viewUrl: string;
-    })[]>([])
+    const allCards = ref()
+    const cardsCount = ref(0)
 
     if(currentUser.value) {
-        allCards.value = await getFilesWithViewUrls(currentUser.value?.$id)
+        let res = await getCardsByUserId(currentUser.value?.$id)
+
+        allCards.value = res.documents
+        cardsCount.value = res.total
     }
+
+    watch(currentUser, async () => {
+        if(currentUser.value) {
+        let res = await getCardsByUserId(currentUser.value?.$id)
+
+        allCards.value = res.documents
+        cardsCount.value = res.total
+    }
+    })
+
 
 
 </script>
@@ -18,11 +30,14 @@
         <h1>All your cards</h1>
         <div v-if="allCards?.length">
             <div v-for="card in allCards" :key="card.$id">
-                {{ card.name }}
+                {{ card.title }}
                 <div>
                     <img :src="card.viewUrl" class="credit-card"/>
                 </div>
             </div>
+        </div>
+        <div v-else>
+            You don't have any cards yet
         </div>
     </div>
 </template>

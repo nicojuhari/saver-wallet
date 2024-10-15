@@ -1,33 +1,45 @@
 import { Databases, ID, Query } from "appwrite";
+import type { Models } from 'appwrite'
 
 export default function useDatabases() {
+    const config = useAppwriteConfig()
     const { client } = useAppwrite()
     const databases = new Databases(client);
-    const APPWRITE_DATABASE_ID = '670d2a39001a601412d8'
-    const APPWRITE_COLLECTION_ID = '670d2a7b000d41aa4892'
 
-    const getCardsByUserId = async (userId: string) => {
+    const getCardsByUserId = async (userId: string): Promise<Models.DocumentList<Models.Document>> => {
         try {
             const response = await databases.listDocuments(
-                    APPWRITE_DATABASE_ID,
-                    APPWRITE_COLLECTION_ID,
+                    config.databaseId,
+                    config.collectionId,
                     [
                         Query.equal('user_id', userId),
-                        Query.limit(100), // Adjust the limit as needed
+                        Query.limit(20), // Adjust the limit as needed
                     ]
             );
-            return response.documents;
+
+            return {
+                ...response,
+                documents: response.documents.map(doc => ({
+                    ...doc,
+                    viewUrl: getFileViewUrl(doc.card_id)
+                }))
+            };
+            // return response;
         } catch (error) {
             console.error('Error fetching cards:', error);
             throw error;
         }
     };
 
+    const getFileViewUrl = (fileId: string): string => {
+        return `${config.endpoint}/storage/buckets/${config.bucketId}/files/${fileId}/view?project=${config.projectId}`
+    }
+
     const addCard = async (cardId: string, title: string, userId: string) => {
         try {
             const response = await databases.createDocument(
-                APPWRITE_DATABASE_ID,  // Database ID
-                APPWRITE_COLLECTION_ID,  // Collection ID
+                config.databaseId,  // Database ID
+                config.collectionId,  // Collection ID
                 ID.unique(),             // Generate a unique document ID
                 {
                     card_id: cardId,
@@ -50,8 +62,8 @@ export default function useDatabases() {
         }>) => {
         try {
             const response = await databases.updateDocument(
-                APPWRITE_DATABASE_ID,
-                APPWRITE_COLLECTION_ID,
+                config.databaseId,
+                config.collectionId,
                 documentId,
                 updatedData
             );

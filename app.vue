@@ -1,8 +1,12 @@
 <script setup lang="ts">
-  if(import.meta.client) {
-    const { initAuth } = useAuth()
-    await initAuth()
+  
+
+  onMounted(async () => {
+    if(import.meta.client) {
+      const { initAuth } = useAuth()
+      await initAuth()
   }
+  })
 
 </script>
 <template>

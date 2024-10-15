@@ -1,4 +1,4 @@
-import { ID } from "appwrite";
+import { ID, Account } from "appwrite";
 import type { Models } from "appwrite"
 
 const currentUser = ref<Models.User<Models.Preferences> | null>(null)
@@ -8,21 +8,16 @@ export default function useAuth() {
 
     // const currentUser = useState<Models.User<Models.Preferences> | null>('currentUser', () => null)
     // const currentSession = useState<Models.Session | null>('currentSession', () => null)
-    const { account } = useAppwrite()
+    const { client } = useAppwrite()
+    const account = new Account(client)
     const router = useRouter()
 
     const createMagicURL = async (email: string) => {
-    
-        
-        const token = await account?.createMagicURLToken(ID.unique(), email, 'http://localhost:3000/auth');
 
+        const token = await account?.createMagicURLToken(ID.unique(), email, 'http://localhost:3000/auth');
         return token
 
     }
-
-    
-
-    
 
     const getSession = async () => {
         try {
@@ -35,11 +30,21 @@ export default function useAuth() {
         }
     }
 
+    const createUserSession = async() => {
+       
+        const urlParams = new URLSearchParams(window.location.search);
+        const secret = urlParams.get('secret') || '';
+        const userId = urlParams.get('userId') || '';
+
+        await account.createSession(userId, secret);
+        currentUser.value = await account.get();
+    }
+
     const initAuth = async () => {
         await getSession()
-        if (!currentUser.value) {
-            router.push('/login') // Redirect to login if no user
-        }
+        // if (!currentUser.value) {
+        //     // router.push('/login') // Redirect to login if no user
+        // }
     }
 
     const logout = async () => {
@@ -61,6 +66,7 @@ export default function useAuth() {
         currentUser,
         currentSession,
         getSession,
+        createUserSession,
         initAuth,
         logout,
     }
