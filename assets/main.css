@@ -10,7 +10,7 @@
 }
 
 input {
-    @apply border text-xl p-2 rounded
+    @apply border text-xl px-2 rounded h-10
 }
 
 .btn {

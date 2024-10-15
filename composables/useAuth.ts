@@ -16,11 +16,8 @@ export default function useAuth() {
 
     const createMagicURL = async (email: string) => {
         try {
-            const token = await account?.createMagicURLToken(ID.unique(), email, `${config.baseUrl}/auth`);
-            return token
-
+            await account?.createMagicURLToken(ID.unique(), email, `${config.baseUrl}/auth`);
         } catch(err) {
-            console.log(err)
             throw err
         }
 
