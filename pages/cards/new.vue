@@ -2,7 +2,7 @@
     
     const { uploadFile }  = useBucket()
     const { addCard } = useDatabase()
-    const { currentUser } = useAuth()
+    const { user } = useAuth()
     const router = useRouter()
     
     
@@ -21,12 +21,12 @@
         
         try {
 
-            if(fileInput?.files?.[0] && currentUser.value) {
+            if(fileInput?.files?.[0] && user.value) {
                 
                 let result = await uploadFile(fileInput.files[0])
                 
                 if(result)
-                    await addCard(result?.$id, cardName.value, currentUser?.value?.$id)
+                    await addCard(result?.$id, cardName.value, user?.value?.$id)
 
                 formSuccess.value = true
 

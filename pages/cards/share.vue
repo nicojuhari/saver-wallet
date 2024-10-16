@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 
 const email = ref('')
-const fileId = ref('670e39570022c59a44be')
+const fileId = ref('')
 const message = ref('')
 const error = ref('')
 

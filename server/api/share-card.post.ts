@@ -37,7 +37,7 @@ export default defineEventHandler(async (event) => {
         const userId = userResponse.users[0].$id
 
         // Step 2: Update file permissions
-        const bucketId = '670d2810001e92b9356c' // Your bucket ID
+        const bucketId = '670e6c4b00360d34a518' // Your bucket ID
 
         const currentFile = await storage.getFile(bucketId, fileId)
 

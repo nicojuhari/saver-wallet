@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    const { currentUser } = useAuth()
+    const { user } = useAuth()
     const { getCardsByUserId, getSharedCards } = useDatabase()
 
     const allCards = ref()
@@ -7,24 +7,24 @@
 
     const sharedCards = ref()
 
-    if(currentUser.value) {
-        let res = await getCardsByUserId(currentUser.value?.$id)
+    if(user.value) {
+        let res = await getCardsByUserId(user.value?.$id)
 
         allCards.value = res.documents
         cardsCount.value = res.total
 
-        let res2 = await getSharedCards(currentUser.value?.$id)
+        let res2 = await getSharedCards(user.value?.$id)
         sharedCards.value = res2.documents
     }
 
-    watch(currentUser, async () => {
-        if(currentUser.value) {
-            let res = await getCardsByUserId(currentUser.value?.$id)
+    watch(user, async () => {
+        if(user.value) {
+            let res = await getCardsByUserId(user.value?.$id)
 
             allCards.value = res.documents
             cardsCount.value = res.total
 
-            let res2 = await getSharedCards(currentUser.value?.$id)
+            let res2 = await getSharedCards(user.value?.$id)
             sharedCards.value = res2.documents
         }
     })
@@ -57,16 +57,3 @@
         </div>
     </div>
 </template>
-
-<style>
-.credit-card {
-  width: 323px; /* Using actual dimensions */
-  height: 204px;
-  max-width: 100%; /* Ensures it doesn't overflow on small screens */
-  aspect-ratio: 85.60 / 53.98; /* Maintains the card's aspect ratio */
-  background-color: #8d8d8d;
-  border-radius: 10px;
-  object-fit: cover;
-  /* Other styles */
-}
-</style>

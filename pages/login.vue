@@ -1,7 +1,6 @@
 <script setup lang="ts">
+    const { login } = useAuth()
     
-
-    const { createMagicURL } = useAuth()
     const userEmail = ref('')
     const linkSent = ref(false)
     const emailError = ref('')
@@ -11,7 +10,7 @@
         return emailRegex.test(email)
     }  
 
-    const handleForm = async () => {
+    const sendMagicLink = async () => {
         emailError.value = ''
 
         if (!userEmail.value) {
@@ -24,14 +23,13 @@
             return
         }
 
-        try {
-            await createMagicURL(userEmail.value)
+        const success = await login(userEmail.value)
+        if (success) {
             userEmail.value = ''
             linkSent.value = true
-        } catch(err) {
-            console.error('Error sending magic link:', err)
-            emailError.value = 'Failed to send magic link. Please try again.'
-        }   
+        } else {
+           emailError.value = 'Failed to send magic link. Please try again.'
+        }
     }
 </script>
 <template>
@@ -44,29 +42,12 @@
                 <input type="email" v-model="userEmail"  :class="{'border-red-500': emailError}">
                 <p v-if="emailError" class="text-red-500 text-sm mt-1">{{ emailError }}</p>
             </div>
-            <button class="btn w-full btn-primary" @click="handleForm">
+            <button class="btn w-full btn-primary" @click="sendMagicLink">
                 Send Magic Link
             </button>
             <p class="text-green-600" v-if="linkSent">
                 Magic link sent!<br>Please check your email and click the link to log in.
             </p>
-            
-            
         </div>
     </div>
 </template>
-<style>
-.divider:before {
-    content: '';
-    display: block;
-    height: 1px;
-    background: #000;
-    position: absolute;
-    left: 0;
-    top: 50%;
-    z-index: 0;
-    border-bottom: 1px solid #eaeaea;
-    width: 100%;
-    margin: 0 auto;
-}
-</style>

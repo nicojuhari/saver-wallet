@@ -1,78 +1,61 @@
-import { ID, Account } from "appwrite";
-import type { Models } from "appwrite"
+// composables/useAuth.js
+// import { ref, readonly } from 'vue'
+// import { useNuxtApp } from '#app'
+import { ID } from 'appwrite'
+import type { Models } from 'appwrite'
 
-const currentUser = ref<Models.User<Models.Preferences> | null>(null)
-const currentSession = ref<Models.Session | null>(null)
+
+const user = ref<Models.User<Models.Preferences> | null>(null)
+const isLoggedIn = ref(false)
+const isLoading = ref(true)
 
 export default function useAuth() {
-
-    // const currentUser = useState<Models.User<Models.Preferences> | null>('currentUser', () => null)
-    // const currentSession = useState<Models.Session | null>('currentSession', () => null)
-    const config = useAppwriteConfig()
-    const { client } = useAppwrite()
-    const account = new Account(client)
-    const router = useRouter()
     
+    const { $appwrite } = useNuxtApp()
+    const config = useAppwriteConfig()
 
-    const createMagicURL = async (email: string) => {
+    const checkAuth = async () => {
+
+        isLoading.value = true
         try {
-            await account?.createMagicURLToken(ID.unique(), email, `${config.baseUrl}/auth`);
-        } catch(err) {
-            throw err
-        }
-
-    }
-
-    const getSession = async () => {
-        try {
-            currentSession.value = await account.getSession('current')
-            currentUser.value = await account.get();
+            const response = await $appwrite.account.get()
+            user.value = response
+            isLoggedIn.value = true
         } catch (error) {
-            console.error('Failed to get session or user:', error)
-            currentSession.value = null
-            currentUser.value = null
+            console.log('User not authenticated:', error)
+            user.value = null
+            isLoggedIn.value = false
+        } finally {
+            isLoading.value = false
         }
     }
 
-    const createUserSession = async() => {
-       
-        const urlParams = new URLSearchParams(window.location.search);
-        const secret = urlParams.get('secret') || '';
-        const userId = urlParams.get('userId') || '';
-
-        await account.createSession(userId, secret);
-        currentUser.value = await account.get();
-    }
-
-    const initAuth = async () => {
-        await getSession()
-        // if (!currentUser.value) {
-        //     // router.push('/login') // Redirect to login if no user
-        // }
+    const login = async (email: string) => {
+        try {
+            await $appwrite.account?.createMagicURLToken(ID.unique(), email, `${config.baseUrl}/auth`);
+            return true
+        } catch (error) {
+        console.error('Error sending magic link:', error)
+        return false
+        }
     }
 
     const logout = async () => {
         try {
-            await account.deleteSession('current')
-            currentSession.value = null
-            currentUser.value = null
-            router.push('/login')
+        await $appwrite.account.deleteSession('current')
+        user.value = null
+        isLoggedIn.value = false
         } catch (error) {
-            console.error('Failed to logout:', error)
+        console.error('Error logging out:', error)
         }
     }
-    
-
-
 
     return {
-        createMagicURL,
-        currentUser,
-        currentSession,
-        getSession,
-        createUserSession,
-        initAuth,
-        logout,
+        user: readonly(user),
+        isLoggedIn: readonly(isLoggedIn),
+        isLoading: readonly(isLoading),
+        checkAuth,
+        login,
+        logout
     }
-
 }

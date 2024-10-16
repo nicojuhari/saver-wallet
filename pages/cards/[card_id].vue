@@ -2,7 +2,7 @@
     const route = useRoute()
     const router = useRouter()
 
-    const { currentUser } = useAuth()
+    const { user, isLoading } = useAuth()
     const { getCard, deleteCard } = useDatabase()
     const { deleteFile } = useBucket()
     
@@ -10,16 +10,15 @@
     const loading = ref(true)
     const card = ref()
 
-    watch(currentUser, async () => {
-       if(currentUser.value) {
-            card.value = await getCard(card_id, currentUser.value.$id)
-            console.log(card.value)
+    if(user.value) {
+        card.value = await getCard(card_id, user.value?.$id)
+        setTimeout(() => {
             loading.value = false
-        }
-    })
+        }, 400)
+    }
 
     const onHandleDelete = async (docId: string, fileId: string) => {
-        if (!currentUser.value) {
+        if (!user.value) {
             alert('You must be logged in to delete a card')
             return
         }
@@ -46,20 +45,17 @@
         }
     }
 
-
-
-
     //get card, by card_id
 </script>
 <template>
-    <div v-show="loading" class="min-h-dvh grid">
+    <div v-if="loading" class="min-h-dvh grid">
         <IncludesLoading class="w-10 m-auto"/>
     </div>
-    <div v-show="!loading" class="container">
-        <h1 class="page-title">{{ card?.title }}</h1>
-        <div>
-            <img :src="card?.viewUrl"  class="credit-card mx-auto"/>
-            <div class="">
+    <div v-if="!loading" class="container py-10 space-y-10">
+        <img :src="card?.viewUrl"  class="credit-card mx-auto"/>
+        <div class="bg-white p-6 rounded-xl space-y-6">
+            <h1 class="text-semibold">Card name: {{ card?.title }}</h1>
+            <div class="flex items-center justify-between border-t py-6">
                 <div>Danger zone</div>
                 <button class="btn border-2 border-red-600 text-red-600" @click.prevent="onHandleDelete(card.$id, card.card_id)">Delete</button>
             </div>

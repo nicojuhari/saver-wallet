@@ -46,3 +46,12 @@ input {
     flex-shrink: 0;
     position: relative;
 }
+
+.credit-card {
+    width: 323px;
+    max-width: 100%;
+    aspect-ratio: 323 / 204;
+    background-color: #dedede;
+    border-radius: 10px;
+    object-fit: cover;
+}
