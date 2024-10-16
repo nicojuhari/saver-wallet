@@ -10,6 +10,7 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@nuxt/icon": "^1.5.6",
     "appwrite": "^16.0.2",
     "node-appwrite": "^14.1.0",
     "nuxt": "^3.13.0",
@@ -17,6 +18,7 @@
     "vue-router": "latest"
   },
   "devDependencies": {
+    "@iconify-json/ph": "^1.2.1",
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.47",
     "tailwindcss": "^3.4.14"

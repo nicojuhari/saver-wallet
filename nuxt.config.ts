@@ -4,12 +4,19 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
   devtools: { enabled: true },
   css: ['~/assets/main.css'],
+  modules: ['@nuxt/icon'],
+  icon: {
+    serverBundle: {
+      collections: ['ph'] // <!--- this
+    }
+  },
   postcss: {
     plugins: {
       tailwindcss: {},
       autoprefixer: {},
     },
   },
+
   app: {
       head: { 
           htmlAttrs: {
@@ -28,5 +35,5 @@ export default defineNuxtConfig({
               { name: 'apple-mobile-web-app-title', content: 'Saver Wallet' },
           ],
       },
-  },
+  }
 })

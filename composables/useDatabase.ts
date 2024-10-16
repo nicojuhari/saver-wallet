@@ -6,6 +6,14 @@ export default function useDatabases() {
     const { client } = useAppwrite()
     const databases = new Databases(client);
 
+
+    const getAllCards = async (userId:string) => {
+        const res1  = await getCardsByUserId(userId)
+        const res2  = await getSharedCards(userId)
+
+        return [...res1.documents, ...res2.documents]
+    }
+
     const getCardsByUserId = async (userId: string): Promise<Models.DocumentList<Models.Document>> => {
         try {
             const response = await databases.listDocuments(
@@ -145,6 +153,7 @@ export default function useDatabases() {
     return {
         addCard,
         getCard,
+        getAllCards,
         deleteCard,
         getCardsByUserId,
         getSharedCards

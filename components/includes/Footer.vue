@@ -1,7 +1,7 @@
 <template>
-    <footer class="border-t bg-white">
-        <div class="container h-14 text-center flex items-center justify-center">
-            Footer
+    <footer class="border-t">
+        <div class="h-14 flex items-center container text-center justify-center gap-1">
+            Created with &lt;3 by <a href="https://nicojuhari.com" alt="Web design by Nick"> Nick</a>
         </div>
     </footer>
 </template>
@@ -9,7 +9,3 @@
 <script setup lang="ts">
 
 </script>
-
-<style scoped>
-
-</style>
