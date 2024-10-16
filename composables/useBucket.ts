@@ -55,8 +55,26 @@ export default function useBucket() {
         }
     }
 
+   const deleteFile = async (fileId: string): Promise<void> => {
+        if (!fileId) {
+            throw new Error('No file ID provided for deletion')
+        }
+
+        try {
+            await storage.deleteFile(
+                config.bucketId,
+                fileId
+            )
+            console.log(`File with ID ${fileId} deleted successfully`)
+        } catch (error) {
+            console.error('Error deleting file:', error)
+            throw error
+        }
+    }
+
     return {
         uploadFile,
+        deleteFile,
         getFilesByUser,
         getFileViewUrl,
         getFilesWithViewUrls,

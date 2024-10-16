@@ -26,6 +26,7 @@
 
         try {
             await createMagicURL(userEmail.value)
+            userEmail.value = ''
             linkSent.value = true
         } catch(err) {
             console.error('Error sending magic link:', err)
@@ -36,8 +37,8 @@
 <template>
     <div class="flex min-h-[calc(100dvh-56px)] p-4">
         <div class="m-auto bg-white shadow-md rounded-md space-y-6 p-6 w-full max-w-sm">
-            <div class="font-bold text-center">Welcome to Our App</div>
-            <p>Log in securely with just your email.<br>We'll send you a magic link to access your account - no password required!</p>
+            <div class="font-bold text-center text-xl">Welcome to Saver Wallet</div>
+            <p class="text-sm">Log in securely with just your email.<br><br>We'll send you a magic link to access your account, no password required!</p>
             <div class="flex flex-col">
                 <label>Email</label>
                 <input type="email" v-model="userEmail"  :class="{'border-red-500': emailError}">
@@ -47,7 +48,7 @@
                 Send Magic Link
             </button>
             <p class="text-green-600" v-if="linkSent">
-                Magic link sent! Please check your email and click the link to log in.
+                Magic link sent!<br>Please check your email and click the link to log in.
             </p>
             
             

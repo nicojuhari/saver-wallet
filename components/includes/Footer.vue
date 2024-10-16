@@ -1,5 +1,5 @@
 <template>
-    <footer class="border-t">
+    <footer class="border-t bg-white">
         <div class="container h-14 text-center flex items-center justify-center">
             Footer
         </div>

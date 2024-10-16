@@ -2,7 +2,7 @@
     const { currentUser } = useAuth()
 </script>
 <template>
-    <header class="border-b">
+    <header class="border-b bg-white">
         <div class="container flex h-14 items-center justify-between">
             <nuxt-link to="/">
                 <img src="/saver-wallet-logo.svg"  title="Saver Wallet" class="h-10"/>

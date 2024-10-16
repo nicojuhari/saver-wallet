@@ -59,6 +59,32 @@ export default function useDatabases() {
         return `${config.endpoint}/storage/buckets/${config.bucketId}/files/${fileId}/view?project=${config.projectId}`
     }
 
+    const getCard = async (cardId: string, userId: string): Promise<Models.Document | null> => {
+        try {
+            const response = await databases.listDocuments(
+                config.databaseId,
+                config.collectionId,
+                [
+                    Query.equal('card_id', cardId),
+                    Query.equal('user_id', userId)
+                ]
+            );
+
+            if (response.documents.length > 0) {
+                const card = response.documents[0];
+                return {
+                    ...card,
+                    viewUrl: getFileViewUrl(card.card_id)
+                };
+            } else {
+                return null;
+            }
+        } catch (error) {
+            console.error('Error fetching card:', error);
+            throw error;
+        }
+    };
+
     const addCard = async (cardId: string, title: string, userId: string) => {
         try {
             const response = await databases.createDocument(
@@ -98,10 +124,28 @@ export default function useDatabases() {
         }
     };
 
+    const deleteCard = async (documentId: string): Promise<void> => {
+        try {
+            // Delete the document
+            await databases.deleteDocument(
+                config.databaseId,
+                config.collectionId,
+                documentId
+            );
+
+            console.log('Card deleted successfully');
+        } catch (error) {
+            console.error('Error deleting card:', error);
+            throw error;
+        }
+    };
+
 
 
     return {
         addCard,
+        getCard,
+        deleteCard,
         getCardsByUserId,
         getSharedCards
     };

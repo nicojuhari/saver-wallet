@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .container {
-    max-width: 1024;
+    max-width: 1024px;
     width: calc(100% - 1rem);
     margin-left: auto;
     margin-right: auto;
@@ -19,4 +19,30 @@ input {
 
 .btn.btn-primary {
     @apply border-2 rounded border-gray-900 text-gray-900 bg-transparent;
+}
+
+.min-h-dvh {
+    min-height: calc(100dvh - 56px - 56px);
+}
+
+.page-title {
+    @apply text-2xl md:text-4xl font-semibold mb-8 mt-12 text-center;
+}
+
+.carousel-row {
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    gap: .75rem;
+    max-width: 440px;
+    margin-left: auto;
+    margin-right: auto;
+    scroll-behavior: smooth;
+}
+
+.carousel-row .carousel-item {
+    scroll-snap-align: center;
+    flex-shrink: 0;
+    position: relative;
 }
