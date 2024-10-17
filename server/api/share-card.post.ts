@@ -42,8 +42,7 @@ export default defineEventHandler(async (event) => {
 
         
         //Step 2: Update shared_with array in database
-       
-console.log('her')
+
         const documentResponse = await databases.listDocuments(
                     databaseId,
                     collectionId,
@@ -62,8 +61,6 @@ console.log('her')
 
         const document = documentResponse.documents[0];
         const sharedWith = document.shared_with || [];
-
-        console.log('her2')
 
         if (!sharedWith.includes(userId)) {
             sharedWith.push(userId);

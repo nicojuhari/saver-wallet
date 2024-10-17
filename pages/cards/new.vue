@@ -1,29 +1,35 @@
 <script setup lang="ts">
+   
     
     const { uploadFile }  = useBucket()
     const { addCard } = useDatabase()
     const { user } = useAuth()
     const router = useRouter()
     
-    
     const cardName = ref('')
     const loading = ref(false)
     const formSuccess = ref(false)
     const formError = ref(false)
-    
+
+    const croppedImage = ref<File | null>(null);
+
+    const handleCroppedImage = (imageUrl: File) => {
+        croppedImage.value = imageUrl;
+    };    
 
     const handleUpload = async () => {
 
-        const fileInput = document.getElementById('cardImage') as HTMLInputElement;
+        // const fileInput = document.getElementById('') as HTMLInputElement;
         loading.value = true
         formError.value = false
         formSuccess.value = false
+
         
         try {
 
-            if(fileInput?.files?.[0] && user.value) {
+            if(croppedImage.value && user.value) {
                 
-                let result = await uploadFile(fileInput.files[0])
+                let result = await uploadFile(croppedImage?.value)
                 
                 if(result)
                     await addCard(result?.$id, cardName.value, user?.value?.$id)
@@ -55,7 +61,6 @@
 </script>
 <template>
     <div class="container">
-        
         <div class="my-6 space-y-6 max-w-xl mx-auto bg-white rounded-lg shadow-md p-6">
             <h1 class="text-center text-semibold text-xl mt-4">Add a new card</h1>
             <div v-if="loading"> Loading ...</div>
@@ -65,15 +70,11 @@
                 <label class="font-medium">Card name:</label>
                 <input type="text" v-model="cardName" class="w-full" />
             </div>
-            <div>
-                <input type="file" id="cardImage" class="w-full" />
-            </div>
+            <ImageCropper @cropped="handleCroppedImage"/>
             <div>
                 <button @click="handleUpload" class="btn btn-primary">Upload</button>
             </div>
         </div>
-        
-        
     </div>
 </template>
 

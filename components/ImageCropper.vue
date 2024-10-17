@@ -1,0 +1,111 @@
+<script setup lang="ts">
+import { Cropper } from 'vue-advanced-cropper'
+import 'vue-advanced-cropper/dist/style.css';
+
+    const cropperRef = ref(null)
+    const imgSrc = ref<string | null>(null)
+    const imgType = ref<string | null>(null)
+    const croppedImg = ref()
+
+    const emit = defineEmits(['cropped']);
+
+    // This function is used to detect the actual image type, 
+function getMimeType(file: Iterable<number>, fallback: string | null = null): string | null {
+    const byteArray = new Uint8Array(file).subarray(0, 4);
+    const header = Array.from(byteArray)
+        .map(byte => byte.toString(16).padStart(2, '0'))
+        .join('');
+
+    const mimeTypes = new Map<string, string>([
+        ["89504e47", "image/png"],
+        ["47494638", "image/gif"],
+        ["ffd8ffe0", "image/jpeg"],
+        ["ffd8ffe1", "image/jpeg"],
+        ["ffd8ffe2", "image/jpeg"],
+        ["ffd8ffe3", "image/jpeg"],
+        ["ffd8ffe8", "image/jpeg"]
+    ]);
+
+    return mimeTypes.get(header) || fallback;
+}
+
+const crop = () => {
+    if (cropperRef.value) {
+        const { canvas } = cropperRef.value.getResult();
+        canvas.toBlob((blob: Blob | null) => {
+            if (blob && imgType.value) {
+                const file = new File([blob], 'cropped-image.png', { type: imgType.value });
+                emit('cropped', file);
+
+                // I need to pass a FILE not a blob
+                // emit('cropped', url);
+                // Do something with blob: upload to a server, download, etc.
+            }
+        }, imgType.value);
+    }
+};
+
+const reset = () => {
+    imgSrc.value = null;
+    imgType.value = null;
+    croppedImg.value = null;
+}
+    
+const loadImage = (event: Event) => {
+    const files = (event.target as HTMLInputElement).files;
+    if (files && files[0]) {
+        if (imgSrc.value) {
+            URL.revokeObjectURL(imgSrc.value);
+        }
+        const blob = URL.createObjectURL(files[0]);
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            if (e.target) {
+                imgSrc.value = blob;
+                const arrayBuffer = e.target.result as ArrayBuffer;
+                const uint8Array = new Uint8Array(arrayBuffer);
+                imgType.value = getMimeType(uint8Array, files[0].type);
+            }
+        };
+        reader.readAsArrayBuffer(files[0]);
+    }
+};
+</script>
+<template>
+    <div>
+            <div>
+                <input type="file" id="cardImage" class="w-full my-6" @change="loadImage" />
+                <cropper
+                    ref="cropperRef"
+                    class="credit-card overflow-hidden m-auto"
+                    :canvas="{
+		                width: 323,
+                        height: 204,
+	                }"
+                    v-if="imgSrc"
+                    :src="imgSrc"
+                    :stencil-props="{
+                        handlers: {},
+                        movable: false,
+                        resizable: false,
+                        aspectRatio: 323/204,
+                    }"
+                    :stencil-size="{
+                        width: 323,
+                        height: 204
+                    }"
+                    :resize-image="{
+                        adjustStencil: false,
+
+                    }"
+                    image-restriction="stencil"
+                    @change="crop"
+                />
+            </div>
+    </div>
+</template>
+
+
+<style scoped>
+
+</style>

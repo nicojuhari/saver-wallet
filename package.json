@@ -16,6 +16,7 @@
     "nuxt": "^3.13.0",
     "radix-vue": "^1.9.7",
     "vue": "latest",
+    "vue-advanced-cropper": "^2.8.9",
     "vue-router": "latest"
   },
   "devDependencies": {
