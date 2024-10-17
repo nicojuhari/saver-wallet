@@ -78,34 +78,40 @@ const rotate = (angle: number)=> {
 </script>
 <template>
     <div>
-            <div>
-                <input type="file" id="cardImage" class="w-full my-6" @change="loadImage" />
-                <cropper
-                    ref="cropperRef"
-                    class="credit-card overflow-hidden m-auto !max-w-[323px]"
-                    :canvas="{
-		                width: 323,
-                        height: 204,
-	                }"
-                    v-if="imgSrc"
-                    :src="imgSrc"
-                    :stencil-props="{
-                        handlers: {},
-                        movable: false,
-                        resizable: false,
-                        aspectRatio: 323/204,
-                    }"
-                    :stencil-size="{
-                        width: 323,
-                        height: 204
-                    }"
-                    :resize-image="{
-                        adjustStencil: false,
-                    }"
-                    image-restriction="stencil"
-                    @change="crop"
-                />
-            </div>
+        <div v-if="!imgSrc" class="flex items-center justify-center credit-card mx-auto border-4 bg-gray-100 border-dashed border-gray-300 rounded-lg cursor-pointer">
+            <label for="cardImage" class="flex items-center justify-center w-full h-full cursor-pointer">
+                <Icon name="i-ph-plus-light" class="text-gray-300 text-8xl"/>
+            </label>
+            <input type="file" id="cardImage" class="hidden" @change="loadImage" accept="image/*" />
+        </div>
+        <!-- <label></label>
+        <input type="file" id="cardImage" class="w-full my-6" @change="loadImage" accept="image/*" /> -->
+        <div  v-else>
+            <cropper
+                ref="cropperRef"
+                class="credit-card shadow-md overflow-hidden m-auto !max-w-[323px]"
+                :canvas="{
+                    width: 323,
+                    height: 204,
+                }"
+                
+                :src="imgSrc"
+                :stencil-props="{
+                    handlers: {},
+                    movable: false,
+                    resizable: false,
+                    aspectRatio: 323/204,
+                }"
+                :stencil-size="{
+                    width: 323,
+                    height: 204
+                }"
+                :resize-image="{
+                    adjustStencil: false,
+                }"
+                image-restriction="fill-area"
+                @change="crop"
+            />
             <div class="flex justify-center gap-4 mt-4">
                 <button @click="flip(true, false)" class="btn-square bg-blue-600 text-blue-600">
                     <Icon name="i-ph-flip-horizontal-duotone"/>
@@ -119,7 +125,12 @@ const rotate = (angle: number)=> {
                 <button @click="rotate(-1)" class="btn-square bg-green-600 text-green-600">
                     <Icon name="i-ph-arrow-counter-clockwise-duotone"/>
                 </button>
+                <button @click="reset" class="btn-square bg-red-600 text-red-600">
+                    <Icon name="i-ph-x-light"/>
+                </button>
             </div>
+            <div class="my-6">* Use gestures or mouse to zoom and move the image</div>
+        </div>
     </div>
 </template>
 

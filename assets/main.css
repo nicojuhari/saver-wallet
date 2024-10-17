@@ -71,6 +71,8 @@ input {
     object-fit: cover;
     background-position: center;
     overflow: hidden;
+    cursor:pointer;
+    @apply shadow-md;
 }
 
 .credit-card img {
