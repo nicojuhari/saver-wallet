@@ -21,6 +21,21 @@ input {
     @apply border-2 rounded border-gray-900 text-gray-900 bg-transparent;
 }
 
+.btn.btn-soft {
+    @apply bg-opacity-10 border-0 font-light;
+}
+
+.btn-square {
+    @apply flex items-center justify-center w-10 h-10 bg-opacity-10 rounded;
+}
+
+.btn-square span {
+    flex-shrink: 0;
+    font-size: 24px;
+}
+
+
+
 .min-h-dvh {
     min-height: calc(100dvh - 56px - 56px);
 }
@@ -48,9 +63,17 @@ input {
 }
 
 .credit-card {
-    width: 323px;
-    max-width: 100%;
+    width: 100%;
+    max-width: 323px;
+    height: auto;
     aspect-ratio: 323 / 204;
     border-radius: 10px;
     object-fit: cover;
+    background-position: center;
+    overflow: hidden;
 }
+
+.credit-card img {
+    width: 100%;
+}
+

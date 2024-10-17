@@ -31,15 +31,11 @@ function getMimeType(file: Iterable<number>, fallback: string | null = null): st
 
 const crop = () => {
     if (cropperRef.value) {
-        const { canvas } = cropperRef.value.getResult();
+        const { canvas } = cropperRef?.value?.getResult();
         canvas.toBlob((blob: Blob | null) => {
             if (blob && imgType.value) {
                 const file = new File([blob], 'cropped-image.png', { type: imgType.value });
                 emit('cropped', file);
-
-                // I need to pass a FILE not a blob
-                // emit('cropped', url);
-                // Do something with blob: upload to a server, download, etc.
             }
         }, imgType.value);
     }
@@ -70,6 +66,15 @@ const loadImage = (event: Event) => {
         reader.readAsArrayBuffer(files[0]);
     }
 };
+
+
+const flip = (x: any,y: any) => {
+    if(cropperRef?.value)
+	    cropperRef?.value?.flip(x,y);
+}
+const rotate = (angle: number)=> {
+    cropperRef?.value?.rotate(angle * 90);
+}
 </script>
 <template>
     <div>
@@ -77,7 +82,7 @@ const loadImage = (event: Event) => {
                 <input type="file" id="cardImage" class="w-full my-6" @change="loadImage" />
                 <cropper
                     ref="cropperRef"
-                    class="credit-card overflow-hidden m-auto"
+                    class="credit-card overflow-hidden m-auto !max-w-[323px]"
                     :canvas="{
 		                width: 323,
                         height: 204,
@@ -96,11 +101,24 @@ const loadImage = (event: Event) => {
                     }"
                     :resize-image="{
                         adjustStencil: false,
-
                     }"
                     image-restriction="stencil"
                     @change="crop"
                 />
+            </div>
+            <div class="flex justify-center gap-4 mt-4">
+                <button @click="flip(true, false)" class="btn-square bg-blue-600 text-blue-600">
+                    <Icon name="i-ph-flip-horizontal-duotone"/>
+                </button>
+                <button @click="flip(false, true)" class="btn-square bg-blue-600 text-blue-600">
+                    <Icon name="i-ph-flip-vertical-duotone"/>
+                </button>
+                <button @click="rotate(1)" class="btn-square bg-green-600 text-green-600">
+                    <Icon name="i-ph-arrow-clockwise-duotone"/>
+                </button>
+                <button @click="rotate(-1)" class="btn-square bg-green-600 text-green-600">
+                    <Icon name="i-ph-arrow-counter-clockwise-duotone"/>
+                </button>
             </div>
     </div>
 </template>
