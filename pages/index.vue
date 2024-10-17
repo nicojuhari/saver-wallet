@@ -25,6 +25,7 @@ onMounted(fetchCards)
             <EmptyWallet v-if="!cardsData?.length"/>
             <CardCarousel :cards="cardsData" v-if="cardsData?.length" />
             <div v-if="isLoggedIn" class="flex gap-6 justify-center mt-10">
+                <nuxt-link to="/cards/new" class="btn btn-primary">Add a card</nuxt-link>
                 <nuxt-link to="/cards" class="btn btn-primary">View your cards</nuxt-link>
             </div>
         </div>
