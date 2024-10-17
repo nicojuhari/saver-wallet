@@ -1,13 +1,11 @@
 <script setup lang="ts">
-    const { user } = useAuth()
+    const { user, isLoggedIn } = useAuth()
     const { getAllCards } = useDatabase()
     const cardsData = ref()
 
 const fetchCards = async () => {
   if (user.value?.$id) {
     cardsData.value = await getAllCards(user.value.$id)
-
-    console.log(cardsData.value)
   }
 }
 
@@ -26,7 +24,7 @@ onMounted(fetchCards)
             </div>
             <EmptyWallet v-if="!cardsData?.length"/>
             <CardCarousel :cards="cardsData" v-if="cardsData?.length" />
-            <div v-if="user" class="flex gap-6 justify-center mt-10">
+            <div v-if="isLoggedIn" class="flex gap-6 justify-center mt-10">
                 <nuxt-link to="/cards" class="btn btn-primary">View your cards</nuxt-link>
             </div>
         </div>

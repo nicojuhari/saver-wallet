@@ -14,7 +14,7 @@ input {
 }
 
 .btn {
-    @apply inline-flex h-10 p-4 rounded items-center justify-center text-center gap-2.5
+    @apply inline-flex h-10 px-4 rounded items-center justify-center text-center gap-2.5 font-semibold;
 }
 
 .btn.btn-primary {
