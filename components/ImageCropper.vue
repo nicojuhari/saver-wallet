@@ -78,7 +78,7 @@ const rotate = (angle: number)=> {
 </script>
 <template>
     <div>
-        <div v-if="!imgSrc" class="flex items-center justify-center credit-card mx-auto border-4 bg-gray-100 border-dashed border-gray-300 rounded-lg cursor-pointer">
+        <div v-if="!imgSrc" class="flex items-center justify-center credit-card mx-auto border-4 bg-gray-100 border-dashed border-gray-300 !shadow-none cursor-pointer">
             <label for="cardImage" class="flex items-center justify-center w-full h-full cursor-pointer">
                 <Icon name="i-ph-plus-light" class="text-gray-300 text-8xl"/>
             </label>
