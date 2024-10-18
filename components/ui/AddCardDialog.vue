@@ -1,11 +1,21 @@
 <script setup lang="ts">
-   
-    
+import {
+  DialogClose,
+  DialogContent,
+  DialogOverlay,
+  DialogPortal,
+  DialogRoot,
+  DialogTitle,
+  DialogTrigger,
+} from 'radix-vue'
+
+ 
     const { uploadFile }  = useBucket()
     const { addCard } = useDatabase()
     const { user } = useAuth()
     const router = useRouter()
     
+    const open = ref(false)
     const cardName = ref('')
     const loading = ref(false)
     const formSuccess = ref(false)
@@ -23,7 +33,6 @@
         loading.value = true
         formError.value = false
         formSuccess.value = false
-
         
         try {
 
@@ -37,6 +46,7 @@
                 formSuccess.value = true
 
                 setTimeout(() => {
+                    open.value = false
                     router.push('/cards')
                 }, 800)
                 
@@ -57,24 +67,40 @@
         
     }
 
-    
+
 </script>
+
 <template>
-    <div class="container">
-        <div class="my-6 space-y-6 max-w-xl mx-auto bg-white rounded-lg shadow-md p-6">
-            <h1 class="text-center text-semibold text-xl mt-4">Add a new card</h1>
+  <DialogRoot v-model:open="open">
+    <DialogTrigger class="fixed right-5 inline-flex bottom-5 h-11 items-center gap-4 bg-gray-200 border border-gray-400 text-gray-600 px-6 rounded-md">
+        <Icon name="i-ph-plus-light" class="text-3xl shrink-0" />
+        <span class="text-xl">Add a Card</span>
+    </DialogTrigger>
+    <DialogPortal>
+      <DialogOverlay class="bg-blackA9 data-[state=open]:animate-overlayShow fixed inset-0 z-30" />
+      <DialogContent
+        class="data-[state=open]:animate-contentShow fixed top-[50%] left-[50%] max-h-[85vh] w-[90vw] max-w-[375px] translate-x-[-50%] translate-y-[-50%] rounded-[6px] bg-white p-6 shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,_hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px] focus:outline-none z-[100]"
+      >
+        <DialogTitle class="mb-10 text-xl font-semibold">
+          Add a new card
+        </DialogTitle>
+        <div class="space-y-6">
             <div v-if="loading"> Loading ...</div>
             <div v-if="formError" class="text-sm text-red-600">Failed to add the card!</div>
             <div v-if="formSuccess" class="text-sm text-green-600">Successfully added the card!</div>
             <div class="flex flex-col">
-                <label class="font-medium">Card name:</label>
+                <label class="font-semibold">Card name (optional):</label>
                 <input type="text" v-model="cardName" class="w-full" />
             </div>
             <ImageCropper @cropped="handleCroppedImage"/>
             <div>
-                <button @click="handleUpload" class="btn btn-primary">Upload</button>
+                <button @click="handleUpload" class="btn btn-primary w-full">Upload</button>
             </div>
         </div>
-    </div>
+        <DialogClose class="absolute top-6 right-6">
+            <Icon name="i-ph-x" class="text-2xl"/>
+        </DialogClose>
+      </DialogContent>
+    </DialogPortal>
+  </DialogRoot>
 </template>
-

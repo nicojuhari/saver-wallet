@@ -15,7 +15,6 @@ const open = ref(false)
 const email = ref('')
 
 const shareCard = async (cardId: string) => {
-    console.log(email.value, cardId)
    
     try {
         await $fetch('/api/share-card', {

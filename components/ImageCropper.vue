@@ -91,8 +91,8 @@ const rotate = (angle: number)=> {
                 ref="cropperRef"
                 class="credit-card shadow-md overflow-hidden m-auto !max-w-[323px]"
                 :canvas="{
-                    width: 323,
-                    height: 204,
+                    width: 485,
+                    height: 306,
                 }"
                 
                 :src="imgSrc"

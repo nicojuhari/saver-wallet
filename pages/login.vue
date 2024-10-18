@@ -1,4 +1,8 @@
 <script setup lang="ts">
+    definePageMeta({
+        layout: 'empty'
+    })
+
     const { login } = useAuth()
     
     const userEmail = ref('')
@@ -33,21 +37,30 @@
     }
 </script>
 <template>
-    <div class="flex min-h-[calc(100dvh-56px)] p-4">
-        <div class="m-auto bg-white shadow-md rounded-md space-y-6 p-6 w-full max-w-sm">
-            <div class="font-bold text-center text-xl">Welcome to Saver Wallet</div>
-            <p class="text-sm">Log in securely with just your email.<br><br>We'll send you a magic link to access your account, no password required!</p>
-            <div class="flex flex-col">
-                <label>Email</label>
-                <input type="email" v-model="userEmail"  :class="{'border-red-500': emailError}">
-                <p v-if="emailError" class="text-red-500 text-sm mt-1">{{ emailError }}</p>
-            </div>
-            <button class="btn w-full btn-primary" @click="sendMagicLink">
-                Send Magic Link
-            </button>
-            <p class="text-green-600" v-if="linkSent">
-                Magic link sent!<br>Please check your email and click the link to log in.
-            </p>
-        </div>
-    </div>
+    <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto h-screen lg:py-0">
+        <nuxt-link to="/" class="flex items-center mb-6 text-2xl font-semibold text-gray-900">
+            <img class="h-10" src="/saver-wallet-logo.svg" alt="Saver Wallet">    
+        </nuxt-link>
+        <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0">
+            <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+                <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2x">
+                  Welcome to Saver Wallet
+                </h1>
+                <p>Log in securely with your email. We'll send you a magic link to access your account—no password needed!</p>
+                <div class="space-y-4 md:space-y-6">
+                    <div>
+                      <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
+                      <input type="email" name="email" id="email" v-model="userEmail" class="w-full"  :class="{'border-red-500': emailError}">
+                      <p v-if="emailError" class="text-red-500 text-sm mt-1">{{ emailError }}</p>
+                    </div>
+                    <button class="btn w-full btn-primary" @click="sendMagicLink">
+                    Send Magic Link
+                    </button>
+                    <p class="text-green-600" v-if="linkSent">
+                        Magic link sent!<br>Please check your email and click the link to log in.
+                    </p>
+                </div>
+          </div>
+      </div>
+  </div>
 </template>

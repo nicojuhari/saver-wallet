@@ -1,5 +1,5 @@
 <template>
-    <div class="container grid place-content-center min-h-dvh">
+    <div class="container grid place-content-center h-screen">
         <div class="text-center flex flex-col items-center">
             <IncludesLoading class="w-20 text-gray-600"/>
             <div class="pt-4">
@@ -12,6 +12,10 @@
 </template>
 
 <script setup lang="ts">
+
+definePageMeta({
+  layout: 'empty'
+})
 
 const router = useRouter();
 const { checkAuth } = useAuth();

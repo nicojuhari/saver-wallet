@@ -1,4 +1,7 @@
 <script setup lang="ts">
+    definePageMeta({
+    layout: 'empty'
+    })
     const { logout } = useAuth()
     const router = useRouter()
 
@@ -7,7 +10,7 @@
 
 </script>
 <template>
-    <div>Logout</div>
+    <div>Logout ...</div>
 </template>
 
 

@@ -5,7 +5,6 @@
 
     const { user } = useAuth()
     const { getCard } = useDatabase()
-    const { deleteFile } = useBucket()
     
     const card_id: string = route.params.card_id as string
     const loading = ref(true)
@@ -17,8 +16,6 @@
             loading.value = false
         }, 400)
     }
-
-    
 
     //get card, by card_id
 </script>
