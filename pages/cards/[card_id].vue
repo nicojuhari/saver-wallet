@@ -1,8 +1,6 @@
 <script setup lang="ts">
 
     const route = useRoute()
-    const router = useRouter()
-
     const { user } = useAuth()
     const { getCard } = useDatabase()
     
@@ -23,7 +21,7 @@
     <div v-if="loading" class="min-h-dvh grid">
         <IncludesLoading class="w-10 m-auto"/>
     </div>
-    <div v-if="!loading" class="container py-10 space-y-10">
+    <div v-if="!loading && card" class="container py-10 space-y-10">
         <img :src="card?.viewUrl"  class="credit-card mx-auto"/>
         <div class="bg-white p-6 rounded-xl">
             <h1 class="text-semibold py-6">Card name: {{ card?.title }}</h1>

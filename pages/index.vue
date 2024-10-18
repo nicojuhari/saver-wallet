@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    const { user, isLoggedIn, checkAuth } = useAuth()
+    const { user, checkAuth } = useAuth()
     const { getAllCards } = useDatabase()
     const cardsData = ref()
 

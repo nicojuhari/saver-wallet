@@ -1,5 +1,5 @@
 <script setup lang="ts">
-
+  const { isLoggedIn } = useAuth()
 </script>
 
 <template>
@@ -8,8 +8,7 @@
     <main class="min-h-dvh py-10">
       <slot></slot>
     </main>
-    <!-- <LazyUiAddCardButton v-if="$route.path !== '/cards/new'"/> -->
-    <LazyUiAddCardDialog />
+    <LazyUiAddCardDialog v-if="isLoggedIn"/>
     <IncludesFooter class="mt-auto" />
   </div>
 </template>

@@ -34,6 +34,9 @@ export default defineNuxtConfig({
           meta: [
               { name: 'apple-mobile-web-app-title', content: 'Saver Wallet' },
           ],
+          script: [
+            { src:"https://cdn.splitbee.io/sb.js", async: ''}
+          ]
       },
   }
 })

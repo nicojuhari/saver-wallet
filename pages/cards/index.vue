@@ -49,11 +49,19 @@
             </div>
         </div>
         <div v-if="allCards?.length" class="gap-4 mx-auto py-2.5" :class="cardsLayoutStyles">
-            <div v-for="card in allCards" :key="card.$id" @click="openZoom(card.viewUrl)" 
+            <div v-for="card in allCards" :key="card.$id" 
                 class="space-y-1.5 snap-center shrink-0 group relative" :class="{'mx-auto' : cardsLayout === 'grid'}">
                 <img :src="card.viewUrl" class="credit-card shadow-md"/>
                 <div class="text-center truncate">{{ card.title }}</div>
-                <div class="hidden group-hover:flex absolute top-5 right-5 z-5" @click="()=> console.log('ss')"> buttons</div>
+                <div class="group-hover:flex hidden absolute top-0 justify-center items-center h-full w-full bg-black bg-opacity-20">
+                    <button @click="openZoom(card.viewUrl)" class="btn-square bg-blue-600 text-blue-600">
+                        <Icon name="i-ph-magnifying-glass-plus-light"/>
+                    </button>
+                    <nuxt-link :to="`/cards/${card.$id}`" class="btn-square bg-green-600 text-green-600">
+                        
+                        <Icon name="i-ph-pencil-line-light"/>
+                    </nuxt-link>
+                </div>
             </div>
         </div>
         <div v-else class="text-2xl text-center my-10">
