@@ -112,7 +112,7 @@ const rotate = (angle: number)=> {
                 image-restriction="fill-area"
                 @change="crop"
             />
-            <div class="flex justify-center gap-4 mt-4">
+            <div class="flex justify-between  gap-4 mt-4">
                 <button @click="flip(true, false)" class="btn-square bg-blue-600 text-blue-600">
                     <Icon name="i-ph-flip-horizontal-duotone"/>
                 </button>
@@ -129,7 +129,7 @@ const rotate = (angle: number)=> {
                     <Icon name="i-ph-x-light"/>
                 </button>
             </div>
-            <div class="my-6">* Use gestures or mouse to zoom and move the image</div>
+            <div class="my-6 text-sm">* Use gestures or mouse to zoom and move the image</div>
         </div>
     </div>
 </template>

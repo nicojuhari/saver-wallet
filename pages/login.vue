@@ -41,7 +41,7 @@
         <nuxt-link to="/" class="flex items-center mb-6 text-2xl font-semibold text-gray-900">
             <img class="h-10" src="/saver-wallet-logo.svg" alt="Saver Wallet">    
         </nuxt-link>
-        <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0">
+        <div class="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
             <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
                 <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2x">
                   Welcome to Saver Wallet
@@ -49,7 +49,7 @@
                 <p>Log in securely with your email. We'll send you a magic link to access your account—no password needed!</p>
                 <div class="space-y-4 md:space-y-6">
                     <div>
-                      <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
+                      <label for="email" class="block mb-2 text-sm font-medium text-gray-900">Your email</label>
                       <input type="email" name="email" id="email" v-model="userEmail" class="w-full"  :class="{'border-red-500': emailError}">
                       <p v-if="emailError" class="text-red-500 text-sm mt-1">{{ emailError }}</p>
                     </div>

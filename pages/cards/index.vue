@@ -21,8 +21,8 @@
 
     const cardsLayoutStyles = computed(() => {
         if(cardsLayout.value === 'slider')
-            return 'flex gap-6 overflow-x-auto snap-mandatory snap-x justify-start'
-        else return 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
+            return 'flex gap-4 overflow-x-auto snap-mandatory snap-x justify-start'
+        else return 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'
     })
 
     const openZoom = (card:any) => {
@@ -51,9 +51,9 @@
                 </button>
             </div>
         </div>
-        <div v-if="allCards?.length" class="gap-4 mx-auto py-2.5" :class="cardsLayoutStyles">
+        <div v-if="allCards?.length" class="mx-auto py-2.5" :class="cardsLayoutStyles">
             <div v-for="card in allCards" :key="card.$id" 
-                class="space-y-2.5 snap-center shrink-0 group relative" :class="{'mx-auto' : cardsLayout === 'grid'}">
+                class="space-y-2.5 snap-center shrink-0" :class="{'mx-auto' : cardsLayout === 'grid'}">
                 <img :src="card.viewUrl" class="credit-card shadow-md" @click="openZoom(card)"/>
             </div>
         </div>
@@ -65,9 +65,9 @@
             <div class="text-lg font-medium"> Shared with yo ({{ sharedCards?.length }})</div>
             <div class="text-sm text-gray-600">click on card to zoom it</div>
         </div>
-        <div v-if="sharedCards?.length" class="gap-4 mx-auto py-2.5" :class="cardsLayoutStyles">
+        <div v-if="sharedCards?.length" class="mx-auto py-2.5" :class="cardsLayoutStyles">
             <div v-for="card in sharedCards" :key="card.$id" @click="openZoom(card.viewUrl)" 
-               class="space-y-1.5 snap-center shrink-0" :class="{'mx-auto' : cardsLayout === 'grid'}">
+               class="space-y-2.5 snap-center shrink-0" :class="{'mx-auto' : cardsLayout === 'grid'}">
                 <img :src="card.viewUrl" class="credit-card shadow-md"/>
                 <div class="text-center truncate">{{ card.title }}</div>
             </div>
@@ -78,21 +78,44 @@
 
         
         <Transition name="fade">
-            <div v-if="zoomCard" class="fixed inset-0 z-10 bg-black bg-opacity-90 " @click="closeZoom">
-                <div class="shrink-0 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 absolute w-full h-auto max-w-[460px] p-4">
-                    <img :src="zoomCard.viewUrl"  class="zoom-card block w-full object-cover rounded-xl aspect-[646/408]" />
-                    <div class="flex gap-6 justify-between py-2 px-1 items-center text-white">
-                        <nuxt-link :to="`/cards/${zoomCard.card_id}`" class="btn-square bg-white">
-                            <Icon name="i-ph-pencil-line-light"/>
-                        </nuxt-link>
-                        <div class="text-center truncate text-white">{{ zoomCard.title }}</div>
-                        <button @click="closeZoom" class="btn-square bg-white">
-                            <Icon name="i-ph-x"/>
-                        </button>
-                    </div>
+            <div v-if="zoomCard" class="fixed inset-0 z-10 bg-black bg-opacity-90">
+                <div class="p-4 bg-white bg-opacity-5 text-xl truncate text-white absolute top-0 left-0 w-full">{{ zoomCard.title }}</div>
+                <div class="zoom-block shrink-0 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 absolute w-full h-auto max-w-[460px] p-4">
+                    <img :src="zoomCard.viewUrl"  class="zoom-card-active w-full object-cover rounded-xl aspesct-[646/408]" />
+                </div>
+                <div class="zoom-card-tools flex gap-8 justify-between py-2 px-1 items-center text-white absolute bottom-10 left-1/2 -translate-x-1/2">
+                    <nuxt-link :to="`/cards/${zoomCard.card_id}`" class="btn-square bg-white shrink-0 !bg-opacity-30">
+                        <Icon name="i-ph-pencil-line-light"/>
+                    </nuxt-link>
+                    
+                    <button @click="closeZoom" class="btn-square bg-white shrink-0 !bg-opacity-30">
+                        <Icon name="i-ph-x"/>
+                    </button>
                 </div>
             </div>
         </Transition>
        
     </div>
 </template>
+<style>
+@media (max-width: 640px) and (orientation: portrait) {
+  .zoom-card-active {
+    rotate: 90deg;
+    transform: translateX(-70px);
+  }
+
+  .zoom-block {
+    transform: translate(-50%, calc(-50% + 70px));  
+  }
+}
+
+@media (max-width: 1000px) and (orientation: landscape) {
+  .zoom-card-tools {
+    right: 0;
+    flex-direction: column;
+    width: 40px;
+    left: auto;
+    bottom: 20px;
+  }
+}
+</style>
