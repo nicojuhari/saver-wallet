@@ -49,8 +49,8 @@ const onHandleDelete = async (docId: string, fileId: string) => {
     <AlertDialogRoot>
     <div class="flex items-center justify-between border-t py-6">
         <div>Danger zone</div>
-        <AlertDialogTrigger class="btn border-red-600 text-red-600 border-2">
-            Delete
+        <AlertDialogTrigger class="btn btn-square btn-soft bg-red-600 text-red-600">
+           <Icon name="i-ph-trash-duotone" />
         </AlertDialogTrigger>
     </div>
     <AlertDialogPortal>

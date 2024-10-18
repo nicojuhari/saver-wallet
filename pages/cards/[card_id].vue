@@ -15,18 +15,25 @@
         }, 400)
     }
 
+     
+
+
+
     //get card, by card_id
 </script>
 <template>
     <div v-if="loading" class="min-h-dvh grid">
         <IncludesLoading class="w-10 m-auto"/>
     </div>
-    <div v-if="!loading && card" class="container py-10 space-y-10">
-        <img :src="card?.viewUrl"  class="credit-card mx-auto"/>
-        <div class="bg-white p-6 rounded-xl">
-            <h1 class="text-semibold py-6">Card name: {{ card?.title }}</h1>
+    <div v-else-if="card" class="max-w-[371px] w-full mx-auto space-y-10">
+        <div class="bg-white p-6 rounded-lg shadow">
+            <img :src="card?.viewUrl"  class="credit-card mx-auto"/>
+            <h1 class="text-lg font-bold py-6">{{ card?.title }}</h1>
             <UiShareCard :card="card"/>
             <UiDeleteCard :card="card" />
+            <div class="border-t">
+                <nuxt-link to="/cards" class="btn btn-primary w-full mt-6">View all cards</nuxt-link>
+            </div>
         </div>
     </div>
 </template>

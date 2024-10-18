@@ -72,12 +72,11 @@ import {
 
 <template>
   <DialogRoot v-model:open="open">
-    <DialogTrigger class="fixed right-5 inline-flex bottom-5 h-11 items-center gap-4 bg-gray-200 border border-gray-400 text-gray-600 px-6 rounded-md">
-        <Icon name="i-ph-plus-light" class="text-3xl shrink-0" />
-        <span class="text-xl">Add a Card</span>
+    <DialogTrigger class="fixed right-4 flex bottom-5 h-14 w-14 items-center bg-red-600 shadow-lg rounded-full justify-center">
+        <Icon name="i-ph-plus" class="text-3xl shrink-0 text-white" />
     </DialogTrigger>
     <DialogPortal>
-      <DialogOverlay class="bg-blackA9 data-[state=open]:animate-overlayShow fixed inset-0 z-30" />
+      <DialogOverlay class="bg-black bg-opacity-20 data-[state=open]:animate-overlayShow fixed inset-0 z-30" />
       <DialogContent
         class="data-[state=open]:animate-contentShow fixed top-[50%] left-[50%] max-h-[85vh] w-[90vw] max-w-[375px] translate-x-[-50%] translate-y-[-50%] rounded-[6px] bg-white p-6 shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,_hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px] focus:outline-none z-[100]"
       >

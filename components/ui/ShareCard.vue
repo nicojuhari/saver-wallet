@@ -42,8 +42,8 @@ const shareCard = async (cardId: string) => {
             Share the card
             <div v-if="card.shared_with?.length" class="text-sm text-gray-600">Aready shared {{ card.shared_with.length }} times</div>
         </div>
-        <DialogTrigger class="btn border-2 border-blue-600 text-blue-600">
-           Share
+        <DialogTrigger class="btn btn-square btn-soft bg-blue-600 text-blue-600">
+           <Icon name="i-ph-share-network-duotone" />
         </DialogTrigger>
     </div>
     <DialogPortal>
