@@ -9,7 +9,7 @@
 </script>
 
 <template>
-    <div class="my-10 sticky h-52 flex justify-center">
+    <div class="sticky h-52 flex justify-center">
         <div
             v-for="(item, idx) in cardRotations"
             :key="idx"
