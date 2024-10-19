@@ -14,6 +14,7 @@
     "appwrite": "^16.0.2",
     "node-appwrite": "^14.1.0",
     "nuxt": "^3.13.0",
+    "photoswipe": "^5.4.4",
     "radix-vue": "^1.9.7",
     "vue": "latest",
     "vue-advanced-cropper": "^2.8.9",
