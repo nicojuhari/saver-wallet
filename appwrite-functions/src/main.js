@@ -4,6 +4,12 @@ const databaseId = '670d2a39001a601412d8' // Replace with your actual database I
 const collectionId = '670d2a7b000d41aa4892' 
 const bucketId = '670e6c4b00360d34a518' // Your bucket ID
 
+function createError({ statusCode, statusMessage }) {
+    const error = new Error(statusMessage);
+    error.statusCode = statusCode;
+    return error;
+}
+
 // This Appwrite function will be executed every time your function is triggered
 export default async ({ req, res, log, error }) => {
   // You can use the Appwrite SDK to interact with other services
