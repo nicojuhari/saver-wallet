@@ -1,4 +1,8 @@
-import { Client, Users, Databases } from 'node-appwrite';
+import { Client, Users, Databases, Storage } from 'node-appwrite';
+
+const databaseId = '670d2a39001a601412d8' // Replace with your actual database ID
+const collectionId = '670d2a7b000d41aa4892' 
+const bucketId = '670e6c4b00360d34a518' // Your bucket ID
 
 // This Appwrite function will be executed every time your function is triggered
 export default async ({ req, res, log, error }) => {
@@ -13,8 +17,10 @@ export default async ({ req, res, log, error }) => {
   const storage = new Storage(client);
   const databases = new Databases(client);
 
+
   const { email, fileId } = req.body
   if (!email || !fileId) {
+    log("Email and cardId are required")
     res.json({
         statusCode: 400,
         statusMessage: "Email and cardId are required",
@@ -77,7 +83,7 @@ export default async ({ req, res, log, error }) => {
         })
    
   } catch(err) {
-    error("Could not list users: " + err.message);
+    error("Error sharing file" + err.message);
 
     res.json({
         statusCode: 500,
