@@ -112,18 +112,15 @@ export default function useDatabases() {
         }
     };
 
-    const updateCard = async (documentId: string, updatedData: Partial<{
-            card_id?: string;
-            title?: string;
-            user_id?: string;
-            shared_with_users_id?: string
-        }>) => {
+    const updateCard = async (documentId: string, title: string) => {
         try {
             const response = await databases.updateDocument(
                 config.databaseId,
                 config.collectionId,
                 documentId,
-                updatedData
+                {
+                    title
+                }
             );
             return response;
         } catch (error) {
@@ -154,6 +151,7 @@ export default function useDatabases() {
         addCard,
         getCard,
         getAllCards,
+        updateCard,
         deleteCard,
         getCardsByUserId,
         getSharedCards

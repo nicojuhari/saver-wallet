@@ -7,9 +7,6 @@
     const cardsCount = ref(0)
 
     const sharedCards = ref()
-    const cardsLayout = ref('slider')
-    const zoomCard = ref()
-    const isShared = ref(false)
 
     if(user.value) {
         let res = await getCardsByUserId(user.value?.$id)
@@ -19,22 +16,6 @@
 
         let res2 = await getSharedCards(user.value?.$id)
         sharedCards.value = res2.documents
-    }
-
-    const cardsLayoutStyles = computed(() => {
-        if(cardsLayout.value === 'slider')
-            return 'flex gap-4 overflow-x-auto snap-mandatory snap-x justify-start'
-        else return 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'
-    })
-
-    const openZoom = (card:any, shared: boolean = false) => {
-        zoomCard.value = card
-        isShared.value = shared
-    }
-
-    const closeZoom = () => {
-        zoomCard.value = null
-        isShared.value = false
     }
 
     const editorMode = ref(false)
@@ -78,9 +59,9 @@
             <div class="text-lg font-medium"> Shared with you ({{ sharedCards?.length }})</div>
             <div class="text-sm text-gray-600">click on card to zoom in/out</div>
         </div>
-        <teamplate v-if="sharedCards?.length">
+        <template v-if="sharedCards?.length">
              <CardCarousel v-if="!editorMode" :cards="sharedCards"/>
-        </teamplate>
+        </template>
         <div v-else class="text-2xl text-center my-10">
             You don't have any shared cards
         </div>

@@ -7,19 +7,15 @@
 </script>
 
 <template>
-    <div class="mx-auto py-2.5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <nuxt-link :to="`/cards/${card.card_id}`" v-for="card in cards" :key="card.$id" 
-            class="shrink-0 mx-auto">
-            <img :src="card.viewUrl" class="credit-card shadow-md"/>
-            <div class="flex gap-4 items-center justify-center py-2.5">
-                <button class="btn btn-square btn-soft bg-blue-600 text-blue-600">
-                    <Icon name="i-ph-share-network-duotone" />
-                </button>
-                <span>or</span>
-                <button class="btn btn-square btn-soft bg-green-600 text-green-600">
-                        <Icon name="i-ph-pencil-line-light"/>
-                    </button>
+    <div class="divide-y-2">
+        <div v-for="card in cards" :key="card.$id" 
+            class="py-6 flex flex-col md:flex-row justify-between">
+            <img :src="card.viewUrl" class="credit-card shadow-md mx-auto md:mx-0"/>
+            <div class="flex gap-6 items-center justify-center mt-6">
+                <UiDeleteCard :card="card" />
+                <UiUpdateCard :card="card"/>
+                <UiShareCard :card="card"/>
             </div>
-        </nuxt-link>
+        </div>
     </div>
 </template>

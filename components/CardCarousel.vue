@@ -41,11 +41,13 @@ onMounted(() => {
       :data-pswp-width="485" 
       :data-pswp-height="306"
       class="shrink-0 credit-card"
+      :title="card?.title"
     >
       <img 
         :src="card.viewUrl" 
         :alt="card.title" 
-        class="shrink-0" 
+        class="shrink-0"
+
       />
     </a>
   </div>
