@@ -34,7 +34,7 @@ const verifySession = async () => {
       await $appwrite.account.updateMagicURLSession(userId, secret);
       await checkAuth(); // This will update the auth state in our composable
       isVerifying.value = false;
-      router.push('/'); // Redirect to home page after successful login
+      router.push('/cards'); // Redirect to cards page after successful login
     } catch (error) {
       console.error('Error verifying session:', error);
       verificationError.value = 'Failed to verify your session. Please try logging in again.';

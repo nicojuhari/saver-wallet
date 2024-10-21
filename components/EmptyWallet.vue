@@ -1,10 +1,14 @@
 <script setup lang="ts">
-    
-    const { isLoggedIn } = useAuth()
+
+    const { isLoggedIn, checkAuth } = useAuth()
     
     // Reverse the order of the arrays
     const cardRotations = [1, .95, .9, .85];
     const cardColors = ['bg-blue-500', 'bg-red-500', 'bg-yellow-500', 'bg-green-500'];
+
+    onMounted(async () => {
+        await checkAuth()
+    })
 
 </script>
 

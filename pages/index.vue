@@ -1,15 +1,4 @@
 <script setup lang="ts">
-    const { user, checkAuth } = useAuth()
-    const { getAllCards } = useDatabase()
-    const cardsData = ref()
-
-    onMounted(async () => {
-        await checkAuth()
-        if (user.value?.$id) {
-            cardsData.value = await getAllCards(user.value.$id) || []
-        }
-    })
-
 
 </script>
 
@@ -21,7 +10,7 @@
                 <div><span class="font-bold">Never forget</span> your loyalty, discount, or membership cards again.</div>
                 <div>Add them online!</div>
             </div>
-            <EmptyWallet :userCards="cardsData" class="mt-20"/>
+            <EmptyWallet class="mt-20"/>
             <div class="inline-flex items-center gap-3 mt-12 px-2 text-left">
                 <Icon name="i-ph-lightbulb-filament-duotone" class="text-green-600 text-2xl md:text-xl shrink-0"/>
                 <span class="text-sm text-gray-500">Add your cards online, share them with friends and family, and save more together.</span>

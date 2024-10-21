@@ -54,7 +54,8 @@ export default function useDatabases() {
                 ...response,
                 documents: response.documents.map(doc => ({
                     ...doc,
-                    viewUrl: getFileViewUrl(doc.card_id)
+                    viewUrl: getFileViewUrl(doc.card_id),
+                    isShared: true,
                 }))
             };
         } catch (error) {
