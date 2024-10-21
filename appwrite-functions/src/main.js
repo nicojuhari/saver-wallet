@@ -24,17 +24,9 @@ export default async ({ req, res, log, error }) => {
   const storage = new Storage(client);
   const databases = new Databases(client);
 
-
-  const { email, fileId } = req.body
-  if (!email || !fileId) {
-    log("Email and cardId are required")
-    throw createError({
-        statusCode: 400,
-        statusMessage: "Email and cardId are required",
-    });
-  }
-
   try {
+        const { email, fileId } = req.body
+
         // Step 1: Check if the user exists and get their ID
         const userResponse = await users.list([Query.equal("email", email), Query.limit(1)]);
 

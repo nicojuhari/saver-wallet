@@ -11,13 +11,17 @@ import {
 } from 'radix-vue'
 
 defineProps(['card'])
+const loading = ref(false)
+const sharedSuccess = ref('')
+const sharedError = ref('')
 const open = ref(false)
 const email = ref('')
 
 const shareCard = async (cardId: string) => {
    
-    try {
-        await $fetch('/api/share-card', {
+  try { 
+        loading.value = true
+        let result: { success: boolean, message: string } = await $fetch('/api/share-card', {
             method: 'POST',
             body: { 
                 email: email.value,
@@ -25,10 +29,27 @@ const shareCard = async (cardId: string) => {
             }
         })
 
-        open.value = false
+        if(result?.success) {
+          sharedSuccess.value = result.message
+        }
+
+        setTimeout(() => {
+          sharedSuccess.value = ''
+          open.value = false
+        }, 2000)        
   
   } catch (e: any) {
     console.error('Error sharing file:', e)
+    
+    sharedError.value = e.statusMessage
+
+    setTimeout(() => {
+      sharedError.value = ''
+    }, 2000)
+
+
+  } finally {
+    loading.value = false
   }
 }
 
@@ -62,11 +83,14 @@ const shareCard = async (cardId: string) => {
           <button
               class="btn btn-primary"
               @click="shareCard(card.card_id)"
+              :disabled="loading"
             >
+            <IncludesLoading v-if="loading" class="w-4"/>
              Share Card
             </button>
-          
         </div>
+        <div v-if="sharedSuccess" class="my-6 text-green-600"> {{  sharedSuccess }}</div>
+        <div v-if="sharedError" class="my-6 text-red-600"> {{  sharedError }}</div>
         <DialogClose class="absolute top-6 right-6">
             <Icon name="i-ph-x" class="text-2xl"/>
         </DialogClose>
