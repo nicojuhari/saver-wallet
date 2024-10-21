@@ -1,4 +1,4 @@
-import { Client, Users, Databases, Storage } from 'node-appwrite';
+import { Client, Users, Databases, Storage, Query, Permission, Role } from 'node-appwrite';
 
 const databaseId = '670d2a39001a601412d8' // Replace with your actual database ID
 const collectionId = '670d2a7b000d41aa4892' 
