@@ -28,7 +28,7 @@ export default async ({ req, res, log, error }) => {
   const { email, fileId } = req.body
   if (!email || !fileId) {
     log("Email and cardId are required")
-    return res.json({
+    throw createError({
         statusCode: 400,
         statusMessage: "Email and cardId are required",
     });
@@ -92,9 +92,9 @@ export default async ({ req, res, log, error }) => {
   } catch(err) {
     error("Error sharing file" + err.message);
 
-    return res.json({
+    throw createError({
         statusCode: 500,
-        statusMessage: "Error sharing file",
+        statusMessage: "Error sharing file: " + err.message,
     });
   }
 };
