@@ -1,5 +1,6 @@
 import { Client, Users, Databases, Storage, Query, Permission, Role } from 'node-appwrite';
-
+const endpoint = 'https://cloud.appwrite.io/v1'
+const projectId = '670d0506003d499f0268'
 const databaseId = '670d2a39001a601412d8' // Replace with your actual database ID
 const collectionId = '670d2a7b000d41aa4892' 
 const bucketId = '670e6c4b00360d34a518' // Your bucket ID
@@ -15,9 +16,9 @@ export default async ({ req, res, log, error }) => {
   // You can use the Appwrite SDK to interact with other services
   // For this example, we're using the Users service
   const client = new Client()
-    .setEndpoint(process.env.APPWRITE_FUNCTION_API_ENDPOINT)
-    .setProject(process.env.APPWRITE_FUNCTION_PROJECT_ID)
-    .setKey(req.headers['x-appwrite-key'] ?? '');
+    .setEndpoint(endpoint)
+    .setProject(projectId)
+    .setKey(process.env.APPWRITE_FUNCTION_API_SECRET_KEY);
   
   const users = new Users(client);
   const storage = new Storage(client);
