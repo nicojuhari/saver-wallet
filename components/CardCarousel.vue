@@ -33,7 +33,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="carousel-row py-2" id="card-carousel">
+  <div class="carousel-row py-4" id="card-carousel">
     <a 
       v-for="card in cards" 
       :key="card.$id" 
