@@ -27,7 +27,7 @@ export default async ({ req, res, log, error }) => {
   const { email, fileId } = req.body
   if (!email || !fileId) {
     log("Email and cardId are required")
-    res.json({
+    return res.json({
         statusCode: 400,
         statusMessage: "Email and cardId are required",
     });
@@ -83,7 +83,7 @@ export default async ({ req, res, log, error }) => {
             [...permissions, Permission.read(Role.user(userId))]
         );
 
-        res.json({
+        return res.json({
             success: true,
             message: "File shared successfully",
         })
@@ -91,7 +91,7 @@ export default async ({ req, res, log, error }) => {
   } catch(err) {
     error("Error sharing file" + err.message);
 
-    res.json({
+    return res.json({
         statusCode: 500,
         statusMessage: "Error sharing file",
     });
