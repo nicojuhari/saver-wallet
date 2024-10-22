@@ -47,7 +47,6 @@ onMounted(() => {
         :src="card.viewUrl" 
         :alt="card.title" 
         class="shrink-0"
-
       />
     </a>
   </div>

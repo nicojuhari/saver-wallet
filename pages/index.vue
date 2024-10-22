@@ -16,6 +16,7 @@
                 <span class="text-sm text-gray-500">Add your cards online, share them with friends and family, and save more together.</span>
             </div>
         </div>
+        <LazyIncludesHomePageContent />
     </div>
 </template>
 

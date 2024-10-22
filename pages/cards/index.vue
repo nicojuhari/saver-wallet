@@ -50,7 +50,7 @@
             </template>
             <CardGrid v-else :cards="allCards" />
         </template>
-        <nuxt-link to="/cards/new" v-else class="credit-card flex item justify-center items-center gap-4 bg-gray-200">
+        <nuxt-link to="/cards/new" v-else class="credit-card mt-4 flex item justify-center items-center gap-4 bg-gray-200">
 
            <Icon name="i-ph-plus-light" class="text-4xl" />
                     <span class="text-xl">Add a Card</span>

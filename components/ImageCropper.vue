@@ -78,9 +78,9 @@ const rotate = (angle: number)=> {
 </script>
 <template>
     <div>
-        <div v-if="!imgSrc" class="flex items-center justify-center credit-card mx-auto border-4 bg-gray-100 border-dashed border-gray-300 !shadow-none cursor-pointer">
+        <div v-if="!imgSrc" class="flex items-center justify-center credit-card mx-auto  bg-gray-200">
             <label for="cardImage" class="flex items-center justify-center w-full h-full cursor-pointer">
-                <Icon name="i-ph-plus-light" class="text-gray-300 text-8xl"/>
+                <Icon name="i-ph-plus-light" class="text-gray-900 text-4xl"/>
             </label>
             <input type="file" id="cardImage" class="hidden" @change="loadImage" accept="image/*" />
         </div>
@@ -129,7 +129,7 @@ const rotate = (angle: number)=> {
                     <Icon name="i-ph-x-light"/>
                 </button>
             </div>
-            <div class="my-6 text-sm">* Use gestures or mouse to zoom and move the image</div>
+            <div class="mt-6 text-sm italic text-gray-600">* Use gestures or mouse to zoom and move the image</div>
         </div>
     </div>
 </template>
