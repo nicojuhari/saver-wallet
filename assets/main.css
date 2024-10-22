@@ -29,7 +29,11 @@ input {
     @apply flex items-center justify-center w-10 h-10 bg-opacity-10 rounded;
 }
 
-.btn-square span {
+.btn-round {
+    @apply flex items-center justify-center w-10 h-10 text-white rounded-full;
+}
+
+.btn-square span, .btn-round span {
     flex-shrink: 0;
     font-size: 24px;
 }
