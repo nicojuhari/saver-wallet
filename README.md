@@ -1,75 +1,10 @@
-# Nuxt 3 Minimal Starter
+# Saver Wallet
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Never forget your loyalty, discount, or membership cards again.
 
-## Setup
+Add them online and share with your friends and family to save more together.
 
-Make sure to install the dependencies:
-
-```bash
-# npm
-npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
-```
-
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm run dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+## How to upload a card?
+1. Take a Photo: Capture a clear image of your loyalty card, making sure any barcodes,QR codes or any other relevant details are visible.
+2. Check Details: Before uploading, you can zoom in, flip, or crop the image to ensure it's perfect.
+3. Save Your Card: Confirm to save the card in the app.
