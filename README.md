@@ -1,3 +1,5 @@
+<img width="600" alt="image" style="text-align:center" src="https://github.com/user-attachments/assets/8c32b307-159b-49e7-9e8f-ef72263b298b">
+
 # Saver Wallet
 
 Never forget your loyalty, discount, or membership cards again.
